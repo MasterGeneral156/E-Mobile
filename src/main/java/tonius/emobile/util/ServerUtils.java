@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -47,15 +48,15 @@ public class ServerUtils {
         );
     }
 
-    public static void sendDiallingParticles(int dimension, double posX, double posY, double posZ) {
+    public static void sendDiallingParticles(int dimension, BlockPos block) {
         PacketHandler.instance.sendToAllAround(
-                new MessageDiallingParticles(posX, posY, posZ),
-                new NetworkRegistry.TargetPoint(dimension, posX, posY, posZ, 256)
+                new MessageDiallingParticles(block),
+                new NetworkRegistry.TargetPoint(dimension, block.getX(), block.getY(), block.getZ(), 256)
         );
     }
 
-    public static void sendDiallingParticles(int dimension, int posX, int posY, int posZ) {
-        sendDiallingParticles(dimension, posX + 0.5D, posY + 0.5D, posZ + 0.5D);
+    public static void sendDiallingParticles(int dimension, double d, double e, double f) {
+        sendDiallingParticles(dimension, d + 0.5D, e + 0.5D, f + 0.5D);
     }
 
     public static void sendDiallingParticles(EntityPlayer player) {

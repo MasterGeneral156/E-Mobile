@@ -15,11 +15,11 @@ public class GuiButtonSmall extends GuiButton {
     @Override
     public void drawButton(Minecraft mc, int x, int y) {
         if (this.visible) {
-            FontRenderer fontrenderer = mc.fontRenderer;
-            mc.getTextureManager().bindTexture(buttonTextures);
+            FontRenderer fontrenderer = mc.fontRendererObj;
+            mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition + this.width && y < this.yPosition + this.height;
-            int k = this.getHoverState(this.field_146123_n);
+            this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition + this.width && y < this.yPosition + this.height;
+            int k = this.getHoverState(this.hovered);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -34,7 +34,7 @@ public class GuiButtonSmall extends GuiButton {
                 l = this.packedFGColour;
             } else if (!this.enabled) {
                 l = 10526880;
-            } else if (this.field_146123_n) {
+            } else if (this.hovered) {
                 l = 16777120;
             }
             

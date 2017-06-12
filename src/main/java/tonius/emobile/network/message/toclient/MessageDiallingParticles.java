@@ -1,6 +1,7 @@
 package tonius.emobile.network.message.toclient;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -11,9 +12,8 @@ public class MessageDiallingParticles implements IMessage, IMessageHandler<Messa
     public double posX;
     public double posY;
     public double posZ;
-
-    @SuppressWarnings("unused")
-    public MessageDiallingParticles() {
+    
+    public MessageDiallingParticles(BlockPos block) {
     }
 
     public MessageDiallingParticles(double posX, double posY, double posZ) {

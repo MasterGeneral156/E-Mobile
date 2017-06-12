@@ -6,7 +6,6 @@ import net.minecraftforge.fml.client.IModGuiFactory;
 
 import java.util.Set;
 
-@SuppressWarnings("unused")
 public class ConfigGuiFactoryEM implements IModGuiFactory {
 
     @Override

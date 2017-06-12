@@ -16,16 +16,17 @@ import tonius.emobile.util.StringUtils;
 
 import javax.annotation.Nullable;
 
-public class ItemCellphone extends Item {
+import com.themastergeneral.ctdcore.item.CTDItem;
 
-    public ItemCellphone() {
+public class ItemCellphone extends CTDItem {
+
+    public ItemCellphone(String modid, String name) {
+    	super(name, modid);
         this.setMaxStackSize(1);
         this.setUnlocalizedName("emobile.cellphone");
-        this.setTextureName("emobile:cellphone");
-        this.setCreativeTab(CreativeTabs.tabTools);
+        this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    @Override
     public ItemStack onItemRightClick(ItemStack cellphone, World world, EntityPlayer player) {
         if (!world.isRemote) {
             player.openGui(EMobile.instance, EMGuiHandler.CELLPHONE_PEARL, world, 0, 0, 0);

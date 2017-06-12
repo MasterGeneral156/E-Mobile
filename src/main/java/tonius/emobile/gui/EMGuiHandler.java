@@ -17,7 +17,7 @@ public class EMGuiHandler implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case CELLPHONE_PEARL:
-                ItemStack cellphonePearls = player.getCurrentEquippedItem();
+                ItemStack cellphonePearls = player.getHeldItemMainhand();
                 if (cellphonePearls != null && cellphonePearls.getItem() instanceof ItemCellphone) {
                     return new ContainerCellphonePearls(player.inventory, new InventoryCellphone(cellphonePearls));
                 }
@@ -29,7 +29,7 @@ public class EMGuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case CELLPHONE_PEARL:
-                ItemStack cellphonePearls = player.getCurrentEquippedItem();
+                ItemStack cellphonePearls = player.getHeldItemMainhand();
                 if (cellphonePearls != null && cellphonePearls.getItem() instanceof ItemCellphone) {
                     return new GuiCellphonePearls(new ContainerCellphonePearls(player.inventory, new InventoryCellphone(cellphonePearls)));
                 }

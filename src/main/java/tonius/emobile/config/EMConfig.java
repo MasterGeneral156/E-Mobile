@@ -19,14 +19,14 @@ public class EMConfig {
     public static final ConfigSection sectionTweaks = new ConfigSection("Tweaks Settings", "tweaks");
 
     // General settings
-    public static ValueWithDefault<Boolean> allowTeleportPlayers = new ValueWithDefault<>(true);
-    public static ValueWithDefault<Boolean> allowTeleportHome = new ValueWithDefault<>(true);
-    public static ValueWithDefault<Boolean> allowTeleportSpawn = new ValueWithDefault<>(true);
-    public static ValueWithDefault<int[]> dimensionsBlacklist = new ValueWithDefault<>(new int[0]);
-    public static ValueWithDefault<Boolean> dimensionsWhitelist = new ValueWithDefault<>(false);
-    public static ValueWithDefault<String[]> bedBlocks = new ValueWithDefault<>(new String[] {
+    public static boolean allowTeleportPlayers = true;
+    public static boolean allowTeleportHome = true;
+    public static boolean allowTeleportSpawn = true;
+    public static int[] dimensionsBlacklist = new int[0];
+    public static Boolean dimensionsWhitelist = false;
+    public static String[] bedBlocks = new String[] {
             "com.carpentersblocks.block.BlockCarpentersBed"
-    });
+    };
 
     // Tweaks
     public static ValueWithDefault<Integer> enderPearlStackSize = new ValueWithDefault<>(16);
@@ -64,35 +64,35 @@ public class EMConfig {
 
     public static void processConfigOptions() {
         // General settings
-        allowTeleportPlayers.value = config.get(sectionGeneral.name,
-                "Allow teleporting to players", allowTeleportPlayers.defaultValue,
+        allowTeleportPlayers = config.get(sectionGeneral.name,
+                "Allow teleporting to players", allowTeleportPlayers,
                 "When enabled, the Ender Cellphone may be used to teleport to other players."
         ).getBoolean();
 
-        allowTeleportHome.value = config.get(sectionGeneral.name,
-                "Allow teleporting home", allowTeleportHome.defaultValue,
+        allowTeleportHome = config.get(sectionGeneral.name,
+                "Allow teleporting home", allowTeleportHome,
                 "When enabled, the Ender Cellphone may be used by players to teleport to their beds."
         ).getBoolean();
 
-        allowTeleportSpawn.value = config.get(sectionGeneral.name,
-                "Allow teleporting to spawn", allowTeleportSpawn.defaultValue,
+        allowTeleportSpawn = config.get(sectionGeneral.name,
+                "Allow teleporting to spawn", allowTeleportSpawn,
                 "When enabled, the Ender Cellphone may be used to teleport to the world spawn."
         ).getBoolean();
 
-        dimensionsBlacklist.value = config.get(sectionGeneral.name,
-                "Dimensions Blacklist", dimensionsBlacklist.defaultValue,
+        dimensionsBlacklist = config.get(sectionGeneral.name,
+                "Dimensions Blacklist", dimensionsBlacklist,
                 "List of IDs of dimensions that may NOT be teleported to or from using the Ender Cellphone. "
         ).getIntList();
 
-        dimensionsWhitelist.value = config.get(sectionGeneral.name,
-                "Dimensions Blacklist is Whitelist", dimensionsWhitelist.defaultValue,
+        dimensionsWhitelist = config.get(sectionGeneral.name,
+                "Dimensions Blacklist is Whitelist", dimensionsWhitelist,
                 "If enabled, the dimensions blacklist will be treated as a whitelist instead. " +
                         "The dimensions will then be the ONLY dimensions that may be teleported to or from using " +
                         "the Ender Cellphone."
         ).getBoolean();
 
-        bedBlocks.value = config.get(sectionGeneral.name,
-                "Bed Blocks", bedBlocks.defaultValue,
+        bedBlocks = config.get(sectionGeneral.name,
+                "Bed Blocks", bedBlocks,
                 "A list of full class names of blocks that count as beds. Use this to add support for modded beds."
         ).getStringList();
 
@@ -131,17 +131,14 @@ public class EMConfig {
             this.value = defaultValue;
         }
 
-        @SuppressWarnings("unused")
         public T getDefaultValue() {
             return defaultValue;
         }
 
-        @SuppressWarnings("unused")
         public T getValue() {
             return value;
         }
 
-        @SuppressWarnings("unused")
         public void setValue(T value) {
             this.value = value;
         }

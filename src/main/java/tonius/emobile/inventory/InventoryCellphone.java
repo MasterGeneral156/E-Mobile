@@ -94,7 +94,6 @@ public class InventoryCellphone implements IInventory {
         return itemStack;
     }
 
-    @Override
     public ItemStack getStackInSlotOnClosing(int slot) {
         ItemStack itemStack = this.getStackInSlot(slot);
         if (itemStack != null) {
@@ -111,12 +110,10 @@ public class InventoryCellphone implements IInventory {
         }
     }
 
-    @Override
     public String getInventoryName() {
         return this.cellphone.getDisplayName();
     }
 
-    @Override
     public boolean hasCustomInventoryName() {
         return true;
     }
@@ -138,11 +135,9 @@ public class InventoryCellphone implements IInventory {
         return true;
     }
 
-    @Override
     public void openInventory() {
     }
 
-    @Override
     public void closeInventory() {
     }
 

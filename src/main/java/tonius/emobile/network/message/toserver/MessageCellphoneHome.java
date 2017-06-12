@@ -24,8 +24,6 @@ import java.util.Arrays;
 public class MessageCellphoneHome implements IMessage, IMessageHandler<MessageCellphoneHome, IMessage> {
 
     private String playerName;
-
-    @SuppressWarnings("unused")
     public MessageCellphoneHome() {
     }
 
@@ -45,7 +43,7 @@ public class MessageCellphoneHome implements IMessage, IMessageHandler<MessageCe
 
     @Override
     public IMessage onMessage(MessageCellphoneHome msg, MessageContext ctx) {
-        if (!EMConfig.allowTeleportHome.getValue()) {
+        if (!EMConfig.allowTeleportHome) {
             return null;
         }
 
@@ -79,7 +77,7 @@ public class MessageCellphoneHome implements IMessage, IMessageHandler<MessageCe
         if (bedPos != null) {
             Block bedBlock = world.getBlockState(bedPos).getBlock();
             if (!(bedBlock instanceof BlockBed) &&
-                    !Arrays.asList(EMConfig.bedBlocks.getValue()).contains(bedBlock.getClass().getName())) {
+                    !Arrays.asList(EMConfig.bedBlocks).contains(bedBlock.getClass().getName())) {
                 bedPos = null;
             }
         }
@@ -98,7 +96,7 @@ public class MessageCellphoneHome implements IMessage, IMessageHandler<MessageCe
         }
 
         CellphoneSessionsManager.addSession(new CellphoneSessionLocation(
-                player, "chat.cellphone.location.home", bedDimension, bedPos.getX(), bedPos.getY(), bedPos.getZ()
+                player, "chat.cellphone.location.home", bedDimension, bedPos
         ));
 
         return null;

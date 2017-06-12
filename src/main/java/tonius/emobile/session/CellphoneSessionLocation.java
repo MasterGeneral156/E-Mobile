@@ -1,6 +1,7 @@
 package tonius.emobile.session;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import tonius.emobile.util.ServerUtils;
 import tonius.emobile.util.StringUtils;
@@ -10,19 +11,15 @@ public class CellphoneSessionLocation extends CellphoneSessionBase {
 
     protected String unlocalizedLocation;
     protected int dimension;
-    protected int posX;
-    protected int posY;
-    protected int posZ;
+    protected BlockPos blockpos;
 
     public CellphoneSessionLocation(EntityPlayerMP player, String unlocalizedLocation, int dimension,
-                                    int posX, int posY, int posZ) {
+                                    BlockPos block) {
         super(player);
 
         this.unlocalizedLocation = unlocalizedLocation;
         this.dimension = dimension;
-        this.posX = posX;
-        this.posY = posY;
-        this.posZ = posZ;
+        this.blockpos = block;
 
         ServerUtils.sendChatToPlayer(player, StringUtils.translate("chat.cellphone.start.location",
                 StringUtils.translate(unlocalizedLocation)), TextFormatting.GOLD);
@@ -46,7 +43,7 @@ public class CellphoneSessionLocation extends CellphoneSessionBase {
 
         if (this.ticks % Math.max(this.countdownSecs - 2, 1) == 0) {
             ServerUtils.sendDiallingParticles(this.player);
-            ServerUtils.sendDiallingParticles(this.dimension, this.posX, this.posY, this.posZ);
+            ServerUtils.sendDiallingParticles(this.dimension, blockpos);
         }
 
         super.tick();
@@ -55,7 +52,7 @@ public class CellphoneSessionLocation extends CellphoneSessionBase {
     @Override
     public void onCountdownFinished() {
         TeleportUtils.teleportPlayerToPos(this.player, this.dimension,
-                this.posX + 0.5D, this.posY + 0.5D, this.posZ + 0.5D);
+                this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 
         ServerUtils.sendChatToPlayer(this.player, StringUtils.translate(
                 "chat.cellphone.success.location", StringUtils.translate(this.unlocalizedLocation)

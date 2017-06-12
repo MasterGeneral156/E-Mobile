@@ -22,12 +22,15 @@ import tonius.emobile.session.CellphoneSessionsManager;
 
 @Mod(modid = EMobile.MODID, version = EMobile.VERSION,
         guiFactory = "tonius.emobile.config.ConfigGuiFactoryEM",
-        dependencies = "required-after:Forge@[12.18.0.1999,);")
+        dependencies = EMobile.DEPENDENCIES)
 public class EMobile {
 
     public static final String MODID = "emobile";
     public static final String PREFIX = MODID + ".";
     public static final String VERSION = "@VERSION@";
+    //Requiring CTD Core just for initial porting, up to original
+    //author if he wishes to keep this requirement or not.
+    public static final String DEPENDENCIES = "required-after:ctdcore@[1.0.2,]";
 
     @Mod.Instance(EMobile.MODID)
     public static EMobile instance;
@@ -54,7 +57,7 @@ public class EMobile {
         }
 
         logger.info("Registering items");
-        cellphone = new ItemCellphone();
+        cellphone = new ItemCellphone("cellphone", EMobile.MODID);
 
         logger.info("Registering sounds");
         phoneSound = this.registerSound("phone");

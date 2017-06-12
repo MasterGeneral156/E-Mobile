@@ -22,16 +22,16 @@ public class MessageConfigSync implements IMessage, IMessageHandler<MessageConfi
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeBoolean(EMConfig.allowTeleportPlayers.getValue());
-        buf.writeBoolean(EMConfig.allowTeleportHome.getValue());
-        buf.writeBoolean(EMConfig.allowTeleportSpawn.getValue());
+        buf.writeBoolean(EMConfig.allowTeleportPlayers);
+        buf.writeBoolean(EMConfig.allowTeleportHome);
+        buf.writeBoolean(EMConfig.allowTeleportSpawn);
     }
 
     @Override
     public IMessage onMessage(MessageConfigSync msg, MessageContext ctx) {
-        EMConfig.allowTeleportPlayers.setValue(msg.allowTeleportPlayers);
-        EMConfig.allowTeleportHome.setValue(msg.allowTeleportHome);
-        EMConfig.allowTeleportSpawn.setValue(msg.allowTeleportSpawn);
+        EMConfig.allowTeleportPlayers = (msg.allowTeleportPlayers);
+        EMConfig.allowTeleportHome = (msg.allowTeleportHome);
+        EMConfig.allowTeleportSpawn = (msg.allowTeleportSpawn);
 
         EMobile.logger.info("Received server configuration");
         return null;

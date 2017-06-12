@@ -16,8 +16,7 @@ public class MessageCellphoneAuthorize implements IMessage, IMessageHandler<Mess
 
     private String acceptingPlayerName;
     private String acceptedPlayerName;
-
-    @SuppressWarnings("unused")
+    
     public MessageCellphoneAuthorize() {
     }
 
@@ -40,7 +39,7 @@ public class MessageCellphoneAuthorize implements IMessage, IMessageHandler<Mess
 
     @Override
     public IMessage onMessage(MessageCellphoneAuthorize msg, MessageContext ctx) {
-        if (!EMConfig.allowTeleportPlayers.getValue()) {
+        if (!EMConfig.allowTeleportPlayers) {
             return null;
         }
 

@@ -42,7 +42,7 @@ public class TeleportUtils {
             return true;
         }
 
-        if (!EMConfig.dimensionsWhitelist.getValue()) {
+        if (!EMConfig.dimensionsWhitelist) {
             return !configContainsDim(from) && !configContainsDim(to);
         } else {
             return configContainsDim(from) && configContainsDim(to);
@@ -50,7 +50,7 @@ public class TeleportUtils {
     }
 
     public static boolean configContainsDim(int dim) {
-        for (int i : EMConfig.dimensionsBlacklist.getValue()) {
+        for (int i : EMConfig.dimensionsBlacklist) {
             if (i == dim) {
                 return true;
             }

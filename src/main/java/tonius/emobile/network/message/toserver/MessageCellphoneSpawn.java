@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -45,45 +46,45 @@ public class MessageCellphoneSpawn implements IMessage, IMessageHandler<MessageC
             if (player == null) {
                 return null;
             } else if (!TeleportUtils.isDimTeleportAllowed(player.dimension, 0)) {
-                ServerUtils.sendChatToPlayer(player.getCommandSenderName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), player.worldObj.provider.getDimensionName(), player.mcServer.worldServerForDimension(0).provider.getDimensionName()), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(player.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), player.worldObj.provider.getDimension(), player.mcServer.worldServerForDimension(0).provider.getDimension()), EnumChatFormatting.RED);
             } else {
                 World world = player.mcServer.worldServerForDimension(0);
-                ChunkCoordinates spawn = world.getSpawnPoint();
+                BlockPos spawn = world.provider.getRandomizedSpawnPoint();
                 if (player.worldObj.provider.canRespawnHere()) {
                     world = player.worldObj;
-                    spawn = world.getSpawnPoint();
+                    spawn = world.provider.getRandomizedSpawnPoint();
                 }
                 if (spawn != null) {
-                    spawn.posY = world.provider.getAverageGroundLevel();
-                    Material mat = world.getBlock(spawn.posX, spawn.posY, spawn.posZ).getMaterial();
-                    Material mat2 = world.getBlock(spawn.posX, spawn.posY + 1, spawn.posZ).getMaterial();
+                    spawn.getY() = world.provider.getAverageGroundLevel();
+                    Material mat = world.getBlockState(spawn).getMaterial();
+                    Material mat2 = world.getBlockState(spawn).getMaterial();
                     if (mat.isSolid() || mat.isLiquid() || mat2.isSolid() || mat2.isLiquid()) {
                         do {
-                            mat = world.getBlock(spawn.posX, spawn.posY, spawn.posZ).getMaterial();
-                            mat2 = world.getBlock(spawn.posX, spawn.posY + 1, spawn.posZ).getMaterial();
+                            mat = world.getBlockState(spawn).getMaterial();
+                            mat2 = world.getBlockState(spawn).getMaterial();
                             if (!mat.isSolid() && !mat.isLiquid() && !mat2.isSolid() && !mat2.isLiquid()) {
                                 break;
                             }
-                            spawn.posY++;
+                            spawn.getY()++;
                         } while (mat.isSolid() || mat.isLiquid() || mat2.isSolid() || mat2.isLiquid());
                     } else {
                         do {
-                            mat = world.getBlock(spawn.posX, spawn.posY - 1, spawn.posZ).getMaterial();
-                            mat2 = world.getBlock(spawn.posX, spawn.posY - 2, spawn.posZ).getMaterial();
+                            mat = world.getBlockState(spawn).getMaterial();
+                            mat2 = world.getBlockState(spawn).getMaterial();
                             if ((mat.isSolid() || mat.isLiquid()) && (mat2.isSolid() || mat2.isLiquid())) {
                                 break;
                             }
-                            spawn.posY--;
+                            spawn.getY()--;
                         } while (!mat.isSolid() && !mat.isLiquid() && !mat2.isSolid() && !mat2.isLiquid());
                     }
-                    spawn.posY += 0.2D;
+                    spawn.getY() += 0.2D;
 
                     if (!CellphoneSessionsManager.isPlayerInSession(player)) {
-                        ItemStack heldItem = player.getCurrentEquippedItem();
+                        ItemStack heldItem = player.getHeldItemMainhand();
                         if (heldItem != null && heldItem.getItem() instanceof ItemCellphone) {
-                            if (player.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(heldItem, player)) {
+                            if (player.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(player)) {
                                 ServerUtils.sendDiallingSound(player);
-                                new CellphoneSessionLocation(8, "chat.cellphone.location.spawn", player, 0, spawn.posX, spawn.posY, spawn.posZ);
+                                new CellphoneSessionLocation(8, "chat.cellphone.location.spawn", player, 0, spawn.getX(), spawn.getY(), spawn.getZ());
                             }
                         }
                     }

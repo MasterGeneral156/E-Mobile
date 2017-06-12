@@ -34,8 +34,8 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     public void initGui() {
         super.initGui();
 
-        this.accept = new GuiTextField(this.fontRendererObj, this.guiLeft + 8, this.guiTop + 41, 127, 12);
-        this.receiver = new GuiTextField(this.fontRendererObj, this.guiLeft + 8, this.guiTop + 71, 127, 12);
+        this.accept = new GuiTextField(1, this.fontRendererObj, this.guiLeft + 8, this.guiTop + 41, 127, 12);
+        this.receiver = new GuiTextField(1, this.fontRendererObj, this.guiLeft + 8, this.guiTop + 71, 127, 12);
 
         this.accept.setEnabled(EMConfig.allowTeleportPlayers);
         this.accept.setVisible(EMConfig.allowTeleportPlayers);
@@ -180,13 +180,13 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     protected void acceptPlayer() {
         if (!this.accept.getText().equals("")) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneAuthorize(this.mc.thePlayer.getCommandSenderName(), this.accept.getText()));
+            PacketHandler.instance.sendToServer(new MessageCellphoneAuthorize(this.mc.thePlayer.getName(), this.accept.getText()));
         }
     }
 
     protected void cancelSessions() {
         this.mc.thePlayer.closeScreen();
-        PacketHandler.instance.sendToServer(new MessageCellphoneCancel(this.mc.thePlayer.getCommandSenderName()));
+        PacketHandler.instance.sendToServer(new MessageCellphoneCancel(this.mc.thePlayer.getName()));
     }
 
     protected abstract boolean hasEnoughFuel();
@@ -194,21 +194,21 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     protected void requestPlayerTeleport() {
         if (!this.receiver.getText().equals("") && this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphonePlayer(this.mc.thePlayer.getCommandSenderName(), this.receiver.getText()));
+            PacketHandler.instance.sendToServer(new MessageCellphonePlayer());
         }
     }
 
     protected void requestSpawnTeleport() {
         if (this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneSpawn(this.mc.thePlayer.getCommandSenderName()));
+            PacketHandler.instance.sendToServer(new MessageCellphoneSpawn(this.mc.thePlayer.getName()));
         }
     }
 
     protected void requestHomeTeleport() {
         if (this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneHome(this.mc.thePlayer.getCommandSenderName()));
+            PacketHandler.instance.sendToServer(new MessageCellphoneHome(this.mc.thePlayer.getName()));
         }
     }
 

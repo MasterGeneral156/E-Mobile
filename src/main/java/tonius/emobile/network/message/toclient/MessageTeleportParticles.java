@@ -12,7 +12,6 @@ public class MessageTeleportParticles implements IMessage, IMessageHandler<Messa
     public double posY;
     public double posZ;
 
-    @SuppressWarnings("unused")
     public MessageTeleportParticles() {
     }
 

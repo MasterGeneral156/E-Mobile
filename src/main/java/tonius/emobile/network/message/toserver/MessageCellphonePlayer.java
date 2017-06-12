@@ -48,21 +48,21 @@ public class MessageCellphonePlayer implements IMessage, IMessageHandler<Message
             if (requestingPlayer == null) {
                 return null;
             } else if (receivingPlayer == null) {
-                ServerUtils.sendChatToPlayer(requestingPlayer.getCommandSenderName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unknown"), msg.receiving), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unknown"), msg.receiving), EnumChatFormatting.RED);
             } else if (!TeleportUtils.isDimTeleportAllowed(requestingPlayer.dimension, receivingPlayer.dimension)) {
-                ServerUtils.sendChatToPlayer(requestingPlayer.getCommandSenderName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), requestingPlayer.worldObj.provider.getDimensionName(), receivingPlayer.worldObj.provider.getDimensionName()), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), requestingPlayer.worldObj.provider.getDimension(), receivingPlayer.worldObj.provider.getDimension()), EnumChatFormatting.RED);
             } else {
                 if (!CellphoneSessionsManager.isPlayerInSession(requestingPlayer)) {
                     if (CellphoneSessionsManager.isPlayerAccepted(receivingPlayer, requestingPlayer)) {
-                        ItemStack heldItem = requestingPlayer.getCurrentEquippedItem();
+                        ItemStack heldItem = requestingPlayer.getActiveItemStack();
                         if (heldItem != null && heldItem.getItem() instanceof ItemCellphone) {
-                            if (requestingPlayer.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(heldItem, requestingPlayer)) {
+                            if (requestingPlayer.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(requestingPlayer)) {
                                 ServerUtils.sendDiallingSound(requestingPlayer);
-                                new CellphoneSessionPlayer(8, requestingPlayer, receivingPlayer);
+                                new CellphoneSessionPlayer(requestingPlayer, receivingPlayer);
                             }
                         }
                     } else {
-                        ServerUtils.sendChatToPlayer(requestingPlayer.getCommandSenderName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unauthorized"), receivingPlayer.getCommandSenderName()), EnumChatFormatting.RED);
+                        ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unauthorized"), receivingPlayer.getName()), EnumChatFormatting.RED);
                     }
                 }
             }

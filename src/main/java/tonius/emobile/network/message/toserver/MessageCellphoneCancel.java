@@ -12,8 +12,6 @@ import tonius.emobile.util.ServerUtils;
 public class MessageCellphoneCancel implements IMessage, IMessageHandler<MessageCellphoneCancel, IMessage> {
 
     private String playerName;
-
-    @SuppressWarnings("unused")
     public MessageCellphoneCancel() {
     }
 

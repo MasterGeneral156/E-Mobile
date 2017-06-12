@@ -10,7 +10,6 @@ import tonius.emobile.config.ClientConfigTickHandler;
 
 import java.util.Random;
 
-@SuppressWarnings("unused")
 public class ClientProxy extends CommonProxy {
 
     private static Minecraft mc = Minecraft.getMinecraft();

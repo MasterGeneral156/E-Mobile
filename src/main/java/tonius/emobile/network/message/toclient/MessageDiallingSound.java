@@ -12,8 +12,7 @@ import tonius.emobile.EMobile;
 public class MessageDiallingSound implements IMessage, IMessageHandler<MessageDiallingSound, IMessage> {
 
     public int entityID;
-
-    @SuppressWarnings("unused")
+    
     public MessageDiallingSound() {
     }
 
