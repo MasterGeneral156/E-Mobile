@@ -6,6 +6,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,13 +30,14 @@ public class ItemCellphone extends CTDItem {
         this.setUnlocalizedName("emobile.cellphone");
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
-
-    public ItemStack onItemRightClick(ItemStack cellphone, World world, EntityPlayer player) {
-        if (!world.isRemote) {
-            player.openGui(EMobile.instance, EMGuiHandler.CELLPHONE_PEARL, world, 0, 0, 0);
-        }
-
-        return cellphone;
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    {
+    	if (!worldIn.isRemote) 
+    	{
+    		playerIn.openGui(EMobile.instance, EMGuiHandler.CELLPHONE_PEARL, worldIn, 0, 0, 0);
+    		return new ActionResult(EnumActionResult.PASS, itemStackIn);
+    	}
+    	return new ActionResult(EnumActionResult.FAIL, itemStackIn);
     }
 
     @Override

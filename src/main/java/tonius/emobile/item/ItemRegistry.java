@@ -9,6 +9,6 @@ public class ItemRegistry extends RegisterItem
 	public static ItemCellphone cellphone = null;
 	public static void register()
 	{
-		cellphone = new ItemCellphone("cellphone", EMobile.MODID);
+		cellphone = register(new ItemCellphone("cellphone", EMobile.MODID));
 	}
 }
