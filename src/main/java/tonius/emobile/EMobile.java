@@ -6,16 +6,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
 import org.apache.logging.log4j.Logger;
+
 import tonius.emobile.config.EMConfig;
+import tonius.emobile.gui.EMGuiHandler;
 import tonius.emobile.item.ItemCellphone;
+import tonius.emobile.item.ItemRegistry;
 import tonius.emobile.network.PacketHandler;
 import tonius.emobile.network.message.toclient.MessageConfigSync;
 import tonius.emobile.session.CellphoneSessionsManager;
@@ -38,8 +44,6 @@ public class EMobile {
     public static CommonProxy proxy;
     public static Logger logger;
 
-    public static ItemCellphone cellphone = null;
-
     public static SoundEvent phoneSound = null;
     public static SoundEvent phoneCountdownSound = null;
 
@@ -57,7 +61,7 @@ public class EMobile {
         }
 
         logger.info("Registering items");
-        cellphone = new ItemCellphone("cellphone", EMobile.MODID);
+        ItemRegistry.register();
 
         logger.info("Registering sounds");
         phoneSound = this.registerSound("phone");
@@ -66,12 +70,18 @@ public class EMobile {
         logger.info("Registering handlers");
         proxy.registerHandlers();
     }
+    
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent evt)
+    {
+    	NetworkRegistry.INSTANCE.registerGuiHandler(this, new EMGuiHandler());
+    }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent evt) {
         logger.info("Registering recipes");
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(cellphone,
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRegistry.cellphone,
                 " IS",
                 "IPI",
                 "IRI",
@@ -89,7 +99,7 @@ public class EMobile {
 
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent evt) {
-        PacketHandler.instance.sendTo(new MessageConfigSync(), (EntityPlayerMP) evt.player);
+        PacketHandler.INSTANCE.sendTo(new MessageConfigSync(), (EntityPlayerMP) evt.player);
     }
 
     private SoundEvent registerSound(String sound) {

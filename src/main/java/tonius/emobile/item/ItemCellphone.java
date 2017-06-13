@@ -20,7 +20,7 @@ import com.themastergeneral.ctdcore.item.CTDItem;
 
 public class ItemCellphone extends CTDItem {
 
-    public ItemCellphone(String modid, String name) {
+    public ItemCellphone(String name, String modid) {
     	super(name, modid);
         this.setMaxStackSize(1);
         this.setUnlocalizedName("emobile.cellphone");

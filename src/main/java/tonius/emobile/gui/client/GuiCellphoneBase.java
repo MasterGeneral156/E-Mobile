@@ -204,13 +204,13 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     protected void acceptPlayer() {
         if (!this.accept.getText().equals("")) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneAuthorize(this.mc.thePlayer.getName(), this.accept.getText()));
+            PacketHandler.INSTANCE.sendToServer(new MessageCellphoneAuthorize(this.mc.thePlayer.getName(), this.accept.getText()));
         }
     }
 
     protected void cancelSessions() {
         this.mc.thePlayer.closeScreen();
-        PacketHandler.instance.sendToServer(new MessageCellphoneCancel(this.mc.thePlayer.getName()));
+        PacketHandler.INSTANCE.sendToServer(new MessageCellphoneCancel(this.mc.thePlayer.getName()));
     }
 
     protected abstract boolean hasEnoughFuel();
@@ -218,21 +218,21 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     protected void requestPlayerTeleport() {
         if (!this.receiver.getText().equals("") && this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphonePlayer());
+            PacketHandler.INSTANCE.sendToServer(new MessageCellphonePlayer());
         }
     }
 
     protected void requestSpawnTeleport() {
         if (this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneSpawn(this.mc.thePlayer.getName()));
+            PacketHandler.INSTANCE.sendToServer(new MessageCellphoneSpawn(this.mc.thePlayer.getName()));
         }
     }
 
     protected void requestHomeTeleport() {
         if (this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.instance.sendToServer(new MessageCellphoneHome(this.mc.thePlayer.getName()));
+            PacketHandler.INSTANCE.sendToServer(new MessageCellphoneHome(this.mc.thePlayer.getName()));
         }
     }
 

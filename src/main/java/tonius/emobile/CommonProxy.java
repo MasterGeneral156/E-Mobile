@@ -12,8 +12,6 @@ public class CommonProxy {
     public void registerHandlers() {
         PacketHandler.preInit();
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new EMGuiHandler());
-
         MinecraftForge.EVENT_BUS.register(EMobile.instance);
         MinecraftForge.EVENT_BUS.register(new CellphoneSessionsManager());
     }

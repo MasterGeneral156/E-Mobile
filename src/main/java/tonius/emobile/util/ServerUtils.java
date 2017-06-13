@@ -42,14 +42,14 @@ public class ServerUtils {
     }
 
     public static void sendDiallingSound(EntityPlayer player) {
-        PacketHandler.instance.sendToAllAround(
+        PacketHandler.INSTANCE.sendToAllAround(
                 new MessageDiallingSound(player.getEntityId()),
                 new NetworkRegistry.TargetPoint(player.dimension, player.posX, player.posY, player.posZ, 256)
         );
     }
 
     public static void sendDiallingParticles(int dimension, BlockPos block) {
-        PacketHandler.instance.sendToAllAround(
+        PacketHandler.INSTANCE.sendToAllAround(
                 new MessageDiallingParticles(block),
                 new NetworkRegistry.TargetPoint(dimension, block.getX(), block.getY(), block.getZ(), 256)
         );
@@ -67,7 +67,7 @@ public class ServerUtils {
         player.worldObj.playSound(null, player.getPosition(),
                 SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
-        PacketHandler.instance.sendToAllAround(
+        PacketHandler.INSTANCE.sendToAllAround(
                 new MessageTeleportParticles(player.posX, player.posY + 0.8D, player.posZ),
                 new NetworkRegistry.TargetPoint(player.dimension, player.posX, player.posY, player.posZ, 256)
         );

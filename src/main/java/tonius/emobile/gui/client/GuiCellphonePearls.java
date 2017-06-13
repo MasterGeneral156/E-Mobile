@@ -2,9 +2,12 @@ package tonius.emobile.gui.client;
 
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
+
 import tonius.emobile.EMobile;
 import tonius.emobile.gui.container.ContainerCellphonePearls;
+import tonius.emobile.item.ItemRegistry;
 import tonius.emobile.util.StringUtils;
 
 import java.util.List;
@@ -18,7 +21,7 @@ public class GuiCellphonePearls extends GuiCellphoneBase {
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2) {
         super.drawGuiContainerForegroundLayer(param1, param2);
-        this.fontRendererObj.drawString(EMobile.cellphone.getItemStackDisplayName(null), 8, 6, 4210752);
+        this.fontRendererObj.drawString(ItemRegistry.cellphone.getItemStackDisplayName(null), 8, 6, 4210752);
     }
     
     @Override
