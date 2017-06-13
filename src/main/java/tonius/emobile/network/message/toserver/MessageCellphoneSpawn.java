@@ -62,6 +62,7 @@ public class MessageCellphoneSpawn implements IMessage, IMessageHandler<MessageC
                             if (player.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(player)) 
                             {
                                 ServerUtils.sendDiallingSound(player);
+                                player.setPositionAndUpdate(spawn.getX(), spawn.getY(), spawn.getZ());
                                 new CellphoneSessionLocation(player, "chat.cellphone.location.spawn", 0, spawn);
                             }
                         }

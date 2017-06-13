@@ -218,7 +218,7 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     protected void requestPlayerTeleport() {
         if (!this.receiver.getText().equals("") && this.hasEnoughFuel()) {
             this.mc.thePlayer.closeScreen();
-            PacketHandler.INSTANCE.sendToServer(new MessageCellphonePlayer());
+            PacketHandler.INSTANCE.sendToServer(new MessageCellphonePlayer(this.mc.thePlayer.getName(),this.receiver.getText()));
         }
     }
 
