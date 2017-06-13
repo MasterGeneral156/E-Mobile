@@ -29,7 +29,7 @@ public class EMConfig {
     };
 
     // Tweaks
-    public static ValueWithDefault<Integer> enderPearlStackSize = new ValueWithDefault<>(16);
+    public static int enderPearlStackSize = 16;
 
     public static void preInit(FMLPreInitializationEvent evt) {
         MinecraftForge.EVENT_BUS.register(new EMConfig());
@@ -97,8 +97,8 @@ public class EMConfig {
         ).getStringList();
 
         // Tweaks
-        enderPearlStackSize.value = config.get(sectionTweaks.name,
-                "Ender Pearl stack size", enderPearlStackSize.defaultValue,
+        enderPearlStackSize = config.get(sectionTweaks.name,
+                "Ender Pearl stack size", enderPearlStackSize,
                 "This config option can be used to change the maximum stack size of Ender Pearls."
         ).setMinValue(1).setMaxValue(512).setRequiresMcRestart(true).getInt();
     }

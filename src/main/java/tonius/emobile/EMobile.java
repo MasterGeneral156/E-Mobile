@@ -55,9 +55,9 @@ public class EMobile {
         EMConfig.preInit(evt);
 
         //noinspection deprecation
-        if (EMConfig.enderPearlStackSize.getValue() != Items.ENDER_PEARL.getItemStackLimit()) {
+        if (EMConfig.enderPearlStackSize != Items.ENDER_PEARL.getItemStackLimit()) {
             logger.info("Changing Ender Pearl stack size to %d", EMConfig.enderPearlStackSize);
-            Items.ENDER_PEARL.setMaxStackSize(EMConfig.enderPearlStackSize.getValue());
+            Items.ENDER_PEARL.setMaxStackSize(EMConfig.enderPearlStackSize);
         }
 
         logger.info("Registering items");
