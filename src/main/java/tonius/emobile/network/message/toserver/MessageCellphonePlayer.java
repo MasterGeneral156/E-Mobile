@@ -48,9 +48,9 @@ public class MessageCellphonePlayer implements IMessage, IMessageHandler<Message
             if (requestingPlayer == null) {
                 return null;
             } else if (receivingPlayer == null) {
-                ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unknown"), msg.receiving), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(requestingPlayer, String.format(StringUtils.translate("chat.cellphone.tryStart.unknown"), msg.receiving));
             } else if (!TeleportUtils.isDimTeleportAllowed(requestingPlayer.dimension, receivingPlayer.dimension)) {
-                ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), requestingPlayer.worldObj.provider.getDimension(), receivingPlayer.worldObj.provider.getDimension()), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(requestingPlayer, String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), requestingPlayer.worldObj.provider.getDimension(), receivingPlayer.worldObj.provider.getDimension()));
             } else {
                 if (!CellphoneSessionsManager.isPlayerInSession(requestingPlayer)) {
                     if (CellphoneSessionsManager.isPlayerAccepted(receivingPlayer, requestingPlayer)) {
@@ -62,7 +62,7 @@ public class MessageCellphonePlayer implements IMessage, IMessageHandler<Message
                             }
                         }
                     } else {
-                        ServerUtils.sendChatToPlayer(requestingPlayer.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.unauthorized"), receivingPlayer.getName()), EnumChatFormatting.RED);
+                        ServerUtils.sendChatToPlayer(requestingPlayer, String.format(StringUtils.translate("chat.cellphone.tryStart.unauthorized"), receivingPlayer.getName()));
                     }
                 }
             }

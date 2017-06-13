@@ -3,15 +3,24 @@ package tonius.emobile.gui.client;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+
 import tonius.emobile.config.EMConfig;
 import tonius.emobile.gui.container.ContainerCellphoneBase;
 import tonius.emobile.network.PacketHandler;
 import tonius.emobile.network.message.toserver.*;
 import tonius.emobile.util.StringUtils;
 
+import java.io.IOException;
 import java.util.List;
 
 public abstract class GuiCellphoneBase extends GuiContainerBase {
@@ -76,7 +85,7 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
             this.fontRendererObj.drawString(StringUtils.translate("gui.cellphone.accept"), 8, 30, 4210752);
             this.fontRendererObj.drawString(StringUtils.translate("gui.cellphone.teleport"), 8, 60, 4210752);
         }
-        this.fontRendererObj.drawString(StringUtils.translate("container.inventory", false), 8, this.ySize - 93, 4210752);
+        this.fontRendererObj.drawString(StringUtils.translate("container.inventory"), 8, this.ySize - 93, 4210752);
     }
 
     @Override
@@ -105,21 +114,29 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     }
 
     @Override
-    protected void getTooltipLines(List lines, int mouseX, int mouseY) {
-        if (this.func_146978_c(8, 90, 14, 14, mouseX, mouseY) && this.buttonHome.visible) {
+    protected void getTooltipLines(List lines, int mouseX, int mouseY) 
+    {
+        /*if (this.func_146978_c(8, 90, 14, 14, mouseX, mouseY) && this.buttonHome.visible) 
+        {
             lines.add(StringUtils.translate("gui.cellphone.home"));
-        } else if (this.func_146978_c(EMConfig.allowTeleportHome ? 26 : 8, 90, 14, 14, mouseX, mouseY) && this.buttonSpawn.visible) {
+        } 
+        else if (this.func_146978_c(EMConfig.allowTeleportHome ? 26 : 8, 90, 14, 14, mouseX, mouseY) && this.buttonSpawn.visible) 
+        {
             lines.add(StringUtils.translate("gui.cellphone.spawn"));
-        } else if (this.func_146978_c(154, 90, 14, 14, mouseX, mouseY)) {
+        } 
+        else if (this.func_146978_c(154, 90, 14, 14, mouseX, mouseY)) 
+        {
             lines.add(StringUtils.translate("gui.cellphone.cancel"));
-        } else if (this.func_146978_c(8, 41, 127, 12, mouseX, mouseY) && EMConfig.allowTeleportPlayers) {
-            lines.add(StringUtils.BOLD + StringUtils.translate("gui.cellphone.prefixes.1"));
-            lines.add(StringUtils.BRIGHT_GREEN + "p:" + StringUtils.END + " - " + StringUtils.translate("gui.cellphone.prefixes.2"));
+        } 
+        else if (this.func_146978_c(8, 41, 127, 12, mouseX, mouseY) && EMConfig.allowTeleportPlayers) 
+        {
+            lines.add(StringUtils.translate("gui.cellphone.prefixes.1"));
+            lines.add(StringUtils.translate("gui.cellphone.prefixes.2"));
             lines.add("      " + StringUtils.translate("gui.cellphone.prefixes.3"));
-            lines.add(StringUtils.BRIGHT_GREEN + "!" + StringUtils.END + " - " + StringUtils.translate("gui.cellphone.prefixes.4"));
+            lines.add(StringUtils.translate("gui.cellphone.prefixes.4"));
             lines.add("      " + StringUtils.translate("gui.cellphone.prefixes.5"));
-            lines.add(StringUtils.LIGHT_RED + StringUtils.ITALIC + StringUtils.translate("gui.cellphone.prefixes.6"));
-        }
+            lines.add(StringUtils.translate("gui.cellphone.prefixes.6"));
+        }*/
     }
 
     @Override
@@ -128,7 +145,8 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int button) {
+    protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException 
+    {
         super.mouseClicked(mouseX, mouseY, button);
         if (EMConfig.allowTeleportPlayers) {
             this.accept.mouseClicked(mouseX, mouseY, button);
@@ -137,7 +155,7 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
     }
 
     @Override
-    public void keyTyped(char c, int i) {
+    public void keyTyped(char c, int i) throws IOException {
         if (EMConfig.allowTeleportPlayers && (this.accept.isFocused() || this.receiver.isFocused()) && i != Keyboard.KEY_ESCAPE) {
             if (i == Keyboard.KEY_RETURN) {
                 if (this.receiver.isFocused()) {
@@ -150,7 +168,13 @@ public abstract class GuiCellphoneBase extends GuiContainerBase {
                 this.receiver.textboxKeyTyped(c, i);
             }
             if (i != Keyboard.KEY_RETURN && i != Keyboard.KEY_BACK && i != Keyboard.KEY_LSHIFT && i != Keyboard.KEY_RSHIFT && i != Keyboard.KEY_LCONTROL && i != Keyboard.KEY_RCONTROL) {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147673_a(new ResourceLocation("emobile", "phone")));
+            	
+            	//FUCK THIS FOR NOW
+            	/*
+            	ResourceLocation location = new ResourceLocation("emobile", "phone");
+            	SoundEvent event = new SoundEvent(location);
+            	EntityPlayer.(event, 1.0F, 1.0F);
+            	*/
             }
         } else {
             super.keyTyped(c, i);

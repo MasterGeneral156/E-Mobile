@@ -31,13 +31,16 @@ public class GuiCellphonePearls extends GuiCellphoneBase {
     @Override
     protected void getTooltipLines(List lines, int mouseX, int mouseY) {
         super.getTooltipLines(lines, mouseX, mouseY);
+        //Will implement later
+        /*
         if (this.func_146978_c(152, 8, 16, 16, mouseX, mouseY) && this.inventorySlots.getInventory().get(0) == null && this.mc.thePlayer.inventory.getItemStack() == null) {
             lines.add(StringUtils.ITALIC + StringUtils.translate("gui.cellphone.pearls.1"));
             lines.add(StringUtils.ITALIC + StringUtils.translate("gui.cellphone.pearls.2"));
             if (this.mc.thePlayer.capabilities.isCreativeMode) {
-                lines.add(StringUtils.BRIGHT_GREEN + StringUtils.ITALIC + StringUtils.translate("gui.cellphone.pearls.creative"));
+                lines.add(StringUtils.translate("gui.cellphone.pearls.creative"));
             }
         }
+        */
     }
     
     @Override

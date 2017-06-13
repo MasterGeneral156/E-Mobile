@@ -46,7 +46,7 @@ public class MessageCellphoneSpawn implements IMessage, IMessageHandler<MessageC
             if (player == null) {
                 return null;
             } else if (!TeleportUtils.isDimTeleportAllowed(player.dimension, 0)) {
-                ServerUtils.sendChatToPlayer(player.getName(), String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), player.worldObj.provider.getDimension(), player.mcServer.worldServerForDimension(0).provider.getDimension()), EnumChatFormatting.RED);
+                ServerUtils.sendChatToPlayer(player, String.format(StringUtils.translate("chat.cellphone.tryStart.dimension"), player.worldObj.provider.getDimension(), player.mcServer.worldServerForDimension(0).provider.getDimension()));
             } else {
                 World world = player.mcServer.worldServerForDimension(0);
                 BlockPos spawn = world.provider.getRandomizedSpawnPoint();
@@ -54,44 +54,20 @@ public class MessageCellphoneSpawn implements IMessage, IMessageHandler<MessageC
                     world = player.worldObj;
                     spawn = world.provider.getRandomizedSpawnPoint();
                 }
-                if (spawn != null) {
-                    spawn.getY() = world.provider.getAverageGroundLevel();
-                    Material mat = world.getBlockState(spawn).getMaterial();
-                    Material mat2 = world.getBlockState(spawn).getMaterial();
-                    if (mat.isSolid() || mat.isLiquid() || mat2.isSolid() || mat2.isLiquid()) {
-                        do {
-                            mat = world.getBlockState(spawn).getMaterial();
-                            mat2 = world.getBlockState(spawn).getMaterial();
-                            if (!mat.isSolid() && !mat.isLiquid() && !mat2.isSolid() && !mat2.isLiquid()) {
-                                break;
-                            }
-                            spawn.getY()++;
-                        } while (mat.isSolid() || mat.isLiquid() || mat2.isSolid() || mat2.isLiquid());
-                    } else {
-                        do {
-                            mat = world.getBlockState(spawn).getMaterial();
-                            mat2 = world.getBlockState(spawn).getMaterial();
-                            if ((mat.isSolid() || mat.isLiquid()) && (mat2.isSolid() || mat2.isLiquid())) {
-                                break;
-                            }
-                            spawn.getY()--;
-                        } while (!mat.isSolid() && !mat.isLiquid() && !mat2.isSolid() && !mat2.isLiquid());
-                    }
-                    spawn.getY() += 0.2D;
-
-                    if (!CellphoneSessionsManager.isPlayerInSession(player)) {
+                    if (!CellphoneSessionsManager.isPlayerInSession(player)) 
+                    {
                         ItemStack heldItem = player.getHeldItemMainhand();
-                        if (heldItem != null && heldItem.getItem() instanceof ItemCellphone) {
-                            if (player.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(player)) {
+                        if (heldItem != null && heldItem.getItem() instanceof ItemCellphone) 
+                        {
+                            if (player.capabilities.isCreativeMode || ((ItemCellphone) heldItem.getItem()).tryUseFuel(player)) 
+                            {
                                 ServerUtils.sendDiallingSound(player);
-                                new CellphoneSessionLocation(8, "chat.cellphone.location.spawn", player, 0, spawn.getX(), spawn.getY(), spawn.getZ());
+                                new CellphoneSessionLocation(player, "chat.cellphone.location.spawn", 0, spawn);
                             }
                         }
                     }
                 }
             }
-        }
-
         return null;
     }
 }

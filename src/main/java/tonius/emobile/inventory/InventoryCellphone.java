@@ -6,12 +6,14 @@ import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.ITextComponent;
 import tonius.emobile.item.ItemCellphone;
 
 public class InventoryCellphone implements IInventory {
 
     private ItemStack cellphone;
     private ItemStack[] inv = new ItemStack[1];
+    private String CustomName;
 
     public InventoryCellphone(ItemStack cellphone) {
         if (cellphone == null || !(cellphone.getItem() instanceof ItemCellphone)) {
@@ -19,7 +21,7 @@ public class InventoryCellphone implements IInventory {
         }
         this.cellphone = cellphone;
 
-        this.readFromNBT(StackUtils.getNBT(cellphone));
+        //this.readFromNBT(StackUtils.getNBT(cellphone));
     }
 
     public ItemStack getCellphone() {
@@ -110,24 +112,9 @@ public class InventoryCellphone implements IInventory {
         }
     }
 
-    public String getInventoryName() {
-        return this.cellphone.getDisplayName();
-    }
-
-    public boolean hasCustomInventoryName() {
-        return true;
-    }
-
     @Override
     public int getInventoryStackLimit() {
-        return 64;
-    }
-
-    @Override
-    public void markDirty() {
-        NBTTagCompound tagCompound = StackUtils.getNBT(this.cellphone);
-        this.writeToNBT(tagCompound);
-        this.cellphone.setTagCompound(tagCompound);
+        return 16;
     }
 
     @Override
@@ -135,15 +122,75 @@ public class InventoryCellphone implements IInventory {
         return true;
     }
 
-    public void openInventory() {
-    }
-
-    public void closeInventory() {
-    }
-
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack item) {
         return item != null && item.getItem() instanceof ItemEnderPearl;
     }
+
+	@Override
+	public String getName() 
+	{
+        return this.hasCustomName() ? this.CustomName : "item.emobile.cellphone.name";
+	}
+
+	@Override
+	public boolean hasCustomName() {
+
+		return this.CustomName != null && !this.CustomName.isEmpty();
+	}
+
+	@Override
+	public ITextComponent getDisplayName() 
+	{
+		return null;
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) 
+	{
+		
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) 
+	{
+		
+	}
+
+	@Override
+	public int getField(int id) 
+	{
+		return 1;
+	}
+
+	@Override
+	public void setField(int id, int value)
+	{
+		
+	}
+
+	@Override
+	public int getFieldCount() 
+	{
+		return this.inv.length;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void markDirty() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
